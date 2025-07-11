@@ -1,12 +1,12 @@
-# Full Stack Engineer Tech Assessment
+# 🧪 Full Stack Engineer Technical Assessment
 
-Welcome to the technical challenge! This test is designed to evaluate your ability to build a simple end-to-end application using **Next.js**, **TypeScript**, and **PostgreSQL**.
+Welcome to the technical challenge. This test is designed to assess your ability to build a simple end-to-end application using **Next.js**, **TypeScript**, and **PostgreSQL**.
 
 ---
 
 ## 🎯 Objective
 
-Build a small web application that allows users to **book meeting rooms**. Each room can only be booked by one person at a time — **you must prevent overlapping bookings**.
+Develop a small web application that allows users to **book meeting rooms**. Each room can only be reserved by one person at a time — your task includes ensuring **overlapping bookings are prevented**.
 
 ---
 
@@ -14,30 +14,30 @@ Build a small web application that allows users to **book meeting rooms**. Each 
 
 - Next.js 14+ (App Router)
 - TypeScript
-- PostgreSQL (can be local or cloud like Supabase)
-- ORM (Optional)
+- PostgreSQL (local or cloud-based, e.g. Supabase)
+- ORM (optional)
 
 ---
 
-## 📂 Features
+## 📂 Application Features
 
 ### 1. **Users**
 
-- Users can be created via a simple form with `name` and `email`
-- No authentication needed
+- Allow users to be created via a simple form (`name`, `email`)
+- No authentication is required
 
 ### 2. **Rooms**
 
-- Prepopulate the database with a few rooms: e.g. `"Room A"`, `"Room B"`, `"Room C"`
+- Prepopulate the database with a few rooms (e.g., `"Room A"`, `"Room B"`, `"Room C"`)
 
 ### 3. **Bookings**
 
-- A user can book a room by specifying:
-  - Room
-  - Date
+- Users should be able to create a booking by selecting:
+  - A room
+  - A date
   - Start time
   - End time
-- Users should not be able to book a room that is already reserved during the same time range
+- The system must **prevent room bookings that conflict with existing reservations**
 
 ---
 
@@ -45,89 +45,96 @@ Build a small web application that allows users to **book meeting rooms**. Each 
 
 ### Home
 
-- List all rooms
-- Link to view bookings per room
+- Display a list of all rooms
+- Each room links to its respective bookings page
 
 ### Bookings Page
 
-- List of upcoming bookings for a specific room
-- Button to add a new booking
+- Show a list of upcoming bookings for the selected room
+- Include a button to add a new booking
 
 ### Booking Form
 
 - Form to create a new booking
-- Should validate against existing overlapping bookings
-- Show a message if the room is already booked in that time range
+- Validate against overlapping bookings
+- If the room is already booked in the selected time slot, inform the user and prevent the booking
 
 ---
 
 ## 🧠 Business Rule: Booking Conflict Check
 
-You **must ensure** that a new booking does not overlap with existing ones for the same room and date.
-If a conflict exists, the user should be notified and the booking should not be created.
+You must ensure a new booking does **not overlap** with any existing bookings for the same room and date.
 
-## Suggested Database Schema (Prisma-style)
+If a conflict is found, the booking should be rejected and the user should receive an appropriate message.
 
-```
+---
+
+## 🗃️ Suggested Database Schema (Prisma-style)
+
+```ts
 model User {
-  id String @id @default(uuid())
-  name String
-  email String
-  bookings Booking[]
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  bookings  Booking[]
 }
 
 model Room {
-  id String @id @default(uuid())
-  name String
-  bookings Booking[]
+  id        String   @id @default(uuid())
+  name      String
+  bookings  Booking[]
 }
 
 model Booking {
-  id String @id @default(uuid())
-  userId String
-  user User @relation(fields: [userId], references: [id])
-  roomId String
-  room Room @relation(fields: [roomId], references: [id])
-  date DateTime
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id])
+  date      DateTime
   startTime String
-  endTime String
+  endTime   String
 }
 ```
 
-You can store startTime and endTime as strings (e.g., "09:00") or use DateTime for precise handling.
+> ℹ️ You may store `startTime` and `endTime` as strings (e.g., `"09:00"`) or as `DateTime`, depending on your preferred implementation.
 
-## Nice To Have
+---
 
-- Application is packaged in Docker.
+## ✨ Nice to Have
 
-## ✅ Evaluation Criteria
+- Application packaged with Docker
 
-We’re looking to understand **how you work**, not just the final result.
+---
 
-We’re paying attention to:
+## ✅ What We’re Looking For
 
-- How you structure and organize your code
-- Your ability to implement and reason through business logic
-- How you use TypeScript and handle data flow
-- Your user experience decisions (navigation, validation, feedback)
-- How clearly your project can be understood and run
+We’re interested not only in the final result, but in **how you approach the problem**.
 
-Bonus points for good practices around error handling, validation, and thoughtful UI/UX.
-Focus on clarity and functionality.
+We’ll pay attention to:
 
-PS:
-We don’t expect it to be perfect — focus on structure, logic, and clarity.
+- How your code is structured and organised
+- Your ability to reason through and implement business logic
+- The use of TypeScript for type safety and data modelling
+- Usability and clarity in the user interface
+- How easy it is to set up and run your project
 
-⸻
+Bonus points for thoughtful handling of validation, errors, and user experience.
+
+> Don’t worry about perfection — focus on clarity, structure, and demonstrating your thinking.
+
+---
 
 ## 🚀 Submission Instructions
 
-1. Create and push the code to a private repo in your account.
-2. Give access to the following users:
+1. Create and push the code to a **private GitHub repository** under your account.
+2. Give access to the following user:
    - [@andremoresco](https://github.com/andremoresco)
 
-When you are done with the tech assessment, please send an email to:
+Once complete, please send an email to:
 
-- andre.moresco@dutydeclared.com
+📩 **andre.moresco@dutydeclared.com**
 
-Good luck! If you have any questions, feel free to ask during the process.
+---
+
+Good luck — and if you have any questions during the process, feel free to reach out!
